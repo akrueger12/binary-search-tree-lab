@@ -5,8 +5,7 @@ public class LabRunner {
 	/**
 	 * Executes the program. Adds/searches/removes from a BST.
 	 * 
-	 * @param args
-	 *            this program accepts no args.
+	 * @param args this program accepts no args.
 	 */
 	public static void main(String[] args) {
 		// create the tree
@@ -17,6 +16,9 @@ public class LabRunner {
 
 		// add Dr. Cooper to the tree
 		insertIntoBSTAndPrintResults(bst, new Person(222222222, "Dr. Cooper"));
+
+		// insert an already existing key
+		insertIntoBSTAndPrintResults(bst, new Person(555555555, "Anna K"));
 
 		// add Anna to the tree
 		insertIntoBSTAndPrintResults(bst, new Person(111111111, "Anna"));
@@ -36,11 +38,17 @@ public class LabRunner {
 		// find the person with NUID 555555555
 		searchInBSTAndPrintResults(bst, 555555555);
 
+		// search for something that doesnt exist
+		searchInBSTAndPrintResults(bst, 8675309);
+
 		// delete the person with NUID 555555555
 		deleteFromBSTAndPrintResults(bst, 555555555);
 
 		// delete the person with NUID 222222222
 		deleteFromBSTAndPrintResults(bst, 222222222);
+
+		// delete element that does not exist
+		deleteFromBSTAndPrintResults(bst, 8675309);
 
 		// delete the person with NUID 333333333
 		deleteFromBSTAndPrintResults(bst, 333333333);
@@ -59,16 +67,14 @@ public class LabRunner {
 	/**
 	 * Inserts a person into a BST and prints the results
 	 * 
-	 * @param bst
-	 *            the BST to insert a person into
-	 * @param person
-	 *            the person to insert into a BST
+	 * @param bst    the BST to insert a person into
+	 * @param person the person to insert into a BST
 	 */
 	private static void insertIntoBSTAndPrintResults(BinarySearchTree bst, Person person) {
 		// insert the person
 		bst.insert(person);
 		// print the results
-		System.out.println("Inserted the person with NUID " + person.key + ": ");
+		System.out.println("Attempted to insert a person with NUID " + person.key + ": ");
 		System.out.println("  " + person);
 		System.out.println(bst);
 	}
@@ -76,34 +82,39 @@ public class LabRunner {
 	/**
 	 * Searches for a person based on a key in a BST and prints the results
 	 * 
-	 * @param bst
-	 *            the BST that might contain the person
-	 * @param key
-	 *            the key that uniquely identifies a person
+	 * @param bst the BST that might contain the person
+	 * @param key the key that uniquely identifies a person
 	 */
 	private static void searchInBSTAndPrintResults(BinarySearchTree bst, int key) {
 		// find the person with NUID key
 		Person found = bst.search(key);
 		// print the results
 		System.out.println("Found the person with NUID " + key + ": ");
-		System.out.println("  " + found);
-		System.out.println(bst);
+		if (found == null) {
+			System.out.println("Person does not exist");
+		} else {
+			System.out.println("  " + found);
+			System.out.println(bst);
+		}
 	}
 
 	/**
 	 * Deletes a person based on a key from the BST and prints the results
 	 * 
-	 * @param bst
-	 *            the BST from which to delete the person
-	 * @param key
-	 *            the key that uniquely identifies a person
+	 * @param bst the BST from which to delete the person
+	 * @param key the key that uniquely identifies a person
 	 */
 	private static void deleteFromBSTAndPrintResults(BinarySearchTree bst, int key) {
 		// delete the person with NUID key
 		Person deleted = bst.delete(key);
 		// print the results
 		System.out.println("Deleted the person with NUID " + key + ": ");
-		System.out.println(" " + deleted);
-		System.out.println(bst);
+		if (deleted == null) {
+			System.out.println("Person does not exist");
+			System.out.println("");
+		} else {
+			System.out.println(" " + deleted);
+			System.out.println(bst);
+		}
 	}
 }

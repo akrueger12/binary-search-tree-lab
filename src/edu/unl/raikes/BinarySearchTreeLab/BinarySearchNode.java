@@ -1,41 +1,56 @@
 package edu.unl.raikes.BinarySearchTreeLab;
 
-// TODO: ADD JAVADOC COMMENT 
+/**
+ * 
+ * This is a node
+ * 
+ * @author anna and devin
+ *
+ */
 class BinarySearchNode {
 	protected BinarySearchNode parent;
 	protected BinarySearchNode leftChild;
 	protected BinarySearchNode rightChild;
 	protected Person person;
 
-	// TODO: ADD JAVADOC COMMENT
+	/**
+	 * Constructor for the node
+	 * 
+	 * @param person
+	 */
 	BinarySearchNode(Person person) {
 		this.person = person;
 	}
 
-	// TODO: ADD JAVADOC COMMENT
+	/**
+	 * Insert a node into the tree
+	 * 
+	 * @param data : this is the person to insert
+	 * @return true if inserted, false if not
+	 */
 	boolean insert(Person data) {
-		// TODO: ADD COMMENT
+		// check to see if this is the person you're looking for
 		if (data == this.person) {
 			return false;
 		}
-		// TODO: ADD COMMENT
+		// if not the person - figure out if you need to go left or right
 		else if (Integer.compare(data.key, person.key) < 0) {
-			// TODO: ADD COMMENT
+			// if there is no left child
 			if (leftChild == null) {
 				setLeftChild(new BinarySearchNode(data));
 				return true;
-			} // TODO: ADD COMMENT
+			} // insert it on the left
 			else {
 				return leftChild.insert(data);
 			}
 		}
-		// TODO: ADD COMMENT
+		// figure out if you need to go left or right
 		else if (Integer.compare(data.key, person.key) > 0) {
-			// TODO: ADD COMMENT
+			// if the right child is null - put the new data on the right
 			if (rightChild == null) {
 				setRightChild(new BinarySearchNode(data));
 				return true;
-			} // TODO: ADD COMMENT
+			} // recursively call insert on the right node if it exists
 			else {
 				return rightChild.insert(data);
 			}
@@ -43,54 +58,66 @@ class BinarySearchNode {
 		return false;
 	}
 
-	// TODO: ADD JAVADOC COMMENT
+	/**
+	 * Check to see if an object is in the tree
+	 * 
+	 * @param key : the key to search for
+	 * @return the node you're looking for
+	 */
 	BinarySearchNode search(int key) {
-		// TODO: ADD COMMENT
+		// if there is a left child and the data you're looking for should be on the
+		// left
 		if (leftChild != null && Integer.compare(key, person.key) < 0) {
 			return leftChild.search(key);
 		}
-		// TODO: ADD COMMENT
+		// if the right child is null and the data you're looking for should be on the
+		// right
 		else if (rightChild != null && Integer.compare(key, person.key) > 0) {
 			return rightChild.search(key);
 		}
-		// TODO: ADD COMMENT
+		// if you have found the thing- return the thing
 		else if (this.person.key == key) {
 			return this;
 		}
-		// TODO: ADD COMMENT
+		// if the data is not in the tree return null
 		else {
 			return null;
 		}
 	}
 
-	// TODO: ADD JAVADOC COMMENT
+	/**
+	 * Delete a node from the tree
+	 * 
+	 * @param key : the key of the node to delete
+	 * @return the person data in the node you've deleted
+	 */
 	Person delete(int key) {
-		// TODO: ADD COMMENT
+		// first find the node
 		BinarySearchNode node = search(key);
 		if (node == null)
 			return null;
 		Person deleted = node.person;
 
-		// TODO: ADD COMMENT
+		// if the node has no children delete it by moving the parent
 		if (node.leftChild == null && node.rightChild == null) {
 			if (node.parent.leftChild == node)
 				node.parent.setLeftChild(null);
 			else if (node.parent.rightChild == node)
 				node.parent.setRightChild(null);
 		}
-		// TODO: ADD COMMENT
+		// if the node has two children, move around some nodes to delete
 		else if (node.leftChild != null && node.rightChild != null) {
 			BinarySearchNode min = node.rightChild.getNodeWithMinValue();
 			node.person = min.person;
 			int minKey = min.person.key;
 			min.delete(minKey);
 		}
-		// TODO: ADD COMMENT
+		// if the node has a left child - set new nodes to delete
 		else if (node.parent.leftChild == node) {
 			BinarySearchNode newLeftChild = (node.leftChild != null) ? node.leftChild : node.rightChild;
 			node.parent.setLeftChild(newLeftChild);
 		}
-		// TODO: ADD COMMENT
+		// if the node has a right child - set new nodes to delete
 		else if (node.parent.rightChild == node) {
 			BinarySearchNode newRightChild = (node.leftChild != null) ? node.leftChild : node.rightChild;
 			node.parent.setRightChild(newRightChild);
@@ -99,7 +126,11 @@ class BinarySearchNode {
 		return deleted;
 	}
 
-	// TODO: ADD JAVADOC COMMENT
+	/**
+	 * Find the left most child of the tree
+	 * 
+	 * @return the left most child of the tree
+	 */
 	BinarySearchNode getNodeWithMinValue() {
 		if (leftChild == null)
 			return this;
@@ -107,26 +138,44 @@ class BinarySearchNode {
 			return leftChild.getNodeWithMinValue();
 	}
 
-	// TODO: ADD JAVADOC COMMENT
+	/**
+	 * Set a node's left child
+	 * 
+	 * @param child the node to be added
+	 */
 	void setLeftChild(BinarySearchNode child) {
 		this.leftChild = child;
 		if (child != null)
 			child.parent = this;
 	}
 
-	// TODO: ADD JAVADOC COMMENT
+	/**
+	 * Set a node's right child
+	 * 
+	 * @param child : the node to be added
+	 */
 	void setRightChild(BinarySearchNode child) {
 		this.rightChild = child;
 		if (child != null)
 			child.parent = this;
 	}
 
-	// TODO: ADD JAVADOC COMMENT (WHAT KIND OF SEARCH SHOULD THIS BE???)
+	/**
+	 * The String representation- recursive to print all nodes in the tree in ORDER
+	 */
 	public String toString() {
 		String toReturn = "";
-		
-		// TODO: ADD COMMENT
+
+		// recursively print the tree
+		if (this.leftChild != null) {
+			toReturn += this.leftChild.toString();
+		}
+
 		toReturn += "  " + person.toString() + "\n";
+
+		if (this.rightChild != null) {
+			toReturn += this.rightChild.toString();
+		}
 
 		return toReturn;
 	}

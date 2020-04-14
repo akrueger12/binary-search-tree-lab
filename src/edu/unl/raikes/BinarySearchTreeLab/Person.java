@@ -1,22 +1,36 @@
 package edu.unl.raikes.BinarySearchTreeLab;
 
-//TODO: ADD JAVADOC COMMENT
+/**
+ * The person class :)
+ * 
+ * @author anna and devin
+ *
+ */
 public class Person implements Comparable<Person> {
 	int key;
 	String name;
 
-	// TODO: ADD JAVADOC COMMENT
+	/**
+	 * The constructor for the person
+	 * 
+	 * @param NUID : the NUID of the person
+	 * @param name : the name of the person
+	 */
 	Person(int NUID, String name) {
 		this.key = NUID;
 		this.name = name;
 	}
 
-	// TODO: ADD JAVADOC COMMENT
+	/**
+	 * The printable version of the person
+	 */
 	public String toString() {
 		return "NUID: " + this.key + "  Name: " + name;
 	}
 
-	// TODO: ADD JAVADOC COMMENT
+	/**
+	 * Compares the people by keys
+	 */
 	public int compareTo(Person other) {
 		return Integer.compare(key, other.key);
 	}
